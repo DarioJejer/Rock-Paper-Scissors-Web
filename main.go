@@ -7,7 +7,11 @@ import (
 )
 
 func homePage(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("index.html")
+	renderTemplate(w, "index.html")
+}
+
+func renderTemplate(w http.ResponseWriter, page string) {
+	t, err := template.ParseFiles(page)
 	if err != nil {
 		log.Println(err)
 		return
