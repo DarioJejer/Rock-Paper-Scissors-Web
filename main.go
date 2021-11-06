@@ -2,15 +2,22 @@ package main
 
 import (
 	"app/rps"
-	"fmt"
+	"encoding/json"
 	"html/template"
 	"log"
 	"net/http"
 )
 
 func playRound(w http.ResponseWriter, r *http.Request) {
-	winner, computerChoise, roundResult := rps.PlayRound(1)
-	fmt.Println(winner, computerChoise, roundResult)
+	result := rps.PlayRound(1)
+
+	out, err := json.MarshalIndent(result, "", "    ")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(out)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {
