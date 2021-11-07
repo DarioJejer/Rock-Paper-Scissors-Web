@@ -11,8 +11,12 @@ const (
 	SCISSORS = 2
 )
 
+var WINNING = []string{"Good job!", "It's your lucky day", "You nail it!"}
+var DRAW = []string{"Great minds think alike", "Try again", "That was close"}
+var LOSSING = []string{"Better luck next time", "To bad =(", "Don't give up"}
+
 type Round struct {
-	// Message        int    `json:"message"`
+	Message        string `json:"message"`
 	ComputerChoise string `json:"computer_choise"`
 	PlayerChoise   string `json:"player_choise"`
 	RoundResult    string `json:"round_result"`
@@ -24,7 +28,7 @@ func PlayRound(playerValue int) Round {
 	computerChoise := ""
 	playerChoise := ""
 	roundResult := ""
-	// message := ""
+	message := ""
 
 	switch playerValue {
 	case ROCK:
@@ -52,20 +56,20 @@ func PlayRound(playerValue int) Round {
 
 	if playerValue == computervalue {
 		roundResult = "It's a draw"
-		// message = WINNING[rand.Intn(3)]
+		message = DRAW[rand.Intn(3)]
 	} else if playerValue == (computervalue+1)%3 {
 		roundResult = "Player wins!"
-		// message = 1
+		message = WINNING[rand.Intn(3)]
 	} else {
 		roundResult = "Computer wins!"
-		// message = 2
+		message = LOSSING[rand.Intn(3)]
 	}
 
 	var result Round
 	result.ComputerChoise = computerChoise
 	result.PlayerChoise = playerChoise
 	result.RoundResult = roundResult
-	// result.Message = message
+	result.Message = message
 
 	return result
 }
