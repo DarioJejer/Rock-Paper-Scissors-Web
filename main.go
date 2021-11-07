@@ -6,18 +6,20 @@ import (
 	"html/template"
 	"log"
 	"net/http"
+	"strconv"
 )
 
-func playRound(w http.ResponseWriter, r *http.Request) {
-	result := rps.PlayRound(1)
+func playRound(rw http.ResponseWriter, r *http.Request) {
+	playerValue, _ := strconv.Atoi(r.URL.Query().Get("playerValue"))
+	result := rps.PlayRound(playerValue)
 
 	out, err := json.MarshalIndent(result, "", "    ")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(out)
+	rw.Header().Set("Content-Type", "application/json")
+	rw.Write(out)
 }
 
 func homePage(w http.ResponseWriter, r *http.Request) {

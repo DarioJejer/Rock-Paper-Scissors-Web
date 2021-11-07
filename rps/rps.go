@@ -6,17 +6,15 @@ import (
 )
 
 const (
-	ROCK          = 0
-	PAPER         = 1
-	SCISSORS      = 2
-	DRAW          = 0
-	PLAYER_WINS   = 1
-	COMPUTER_WINS = 2
+	ROCK     = 0
+	PAPER    = 1
+	SCISSORS = 2
 )
 
 type Round struct {
-	Winner         int    `json:"winner"`
+	// Message        int    `json:"message"`
 	ComputerChoise string `json:"computer_choise"`
+	PlayerChoise   string `json:"player_choise"`
 	RoundResult    string `json:"round_result"`
 }
 
@@ -24,8 +22,21 @@ func PlayRound(playerValue int) Round {
 	rand.Seed(time.Now().UnixNano())
 	computervalue := rand.Intn(3)
 	computerChoise := ""
+	playerChoise := ""
 	roundResult := ""
-	winner := 0
+	// message := ""
+
+	switch playerValue {
+	case ROCK:
+		playerChoise = "Player chose ROCK"
+		break
+	case PAPER:
+		playerChoise = "Player chose PAPER"
+		break
+	case SCISSORS:
+		playerChoise = "Player chose SCISSORS"
+		break
+	}
 
 	switch computervalue {
 	case ROCK:
@@ -41,19 +52,20 @@ func PlayRound(playerValue int) Round {
 
 	if playerValue == computervalue {
 		roundResult = "It's a draw"
-		winner = 0
+		// message = WINNING[rand.Intn(3)]
 	} else if playerValue == (computervalue+1)%3 {
 		roundResult = "Player wins!"
-		winner = 1
+		// message = 1
 	} else {
 		roundResult = "Computer wins!"
-		winner = 2
+		// message = 2
 	}
 
 	var result Round
 	result.ComputerChoise = computerChoise
+	result.PlayerChoise = playerChoise
 	result.RoundResult = roundResult
-	result.Winner = winner
+	// result.Message = message
 
 	return result
 }

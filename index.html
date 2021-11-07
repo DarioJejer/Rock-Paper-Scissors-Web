@@ -15,6 +15,7 @@
         <p id="player-choice">Player chose paper</p>
         <p id="computer-choice">Computer chose rock</p>
         <p id="round-result">PLayer won</p>
+        <!-- <p id="round-message">PLayer won</p> -->
         
         <hr>
         <p>Choose rock, paper, or scissors!</p>
@@ -30,16 +31,11 @@
         .then(response => response.json())
         .then(data => {
             console.log(data)
+            document.getElementById("player-choice").innerHTML = data.player_choise;
+            document.getElementById("computer-choice").innerHTML = data.computer_choise;
+            document.getElementById("round-result").innerHTML = data.round_result;
+            document.getElementById("round-message").innerHTML = data.message;
         })
-        if(optionSelected == 1){             
-            document.getElementById("player-choice").innerHTML = "Player";
-        }
-        else if(optionSelected == 2){
-            document.getElementById("computer-choice").innerHTML = "Computer";
-        }
-        else{
-            document.getElementById("round-result").innerHTML = "Result";
-        }
     }
 </script>
 </html>
